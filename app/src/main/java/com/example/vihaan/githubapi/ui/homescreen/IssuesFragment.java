@@ -83,14 +83,18 @@ public class IssuesFragment extends Fragment {
     }
 
     IssuesAdapter mIssuesAdapter;
+    private List<Issue> mIssues;
     private void handleResponse(List<Issue> issues){
+        mIssues = issues;
         mIssuesAdapter = new IssuesAdapter(getActivity(), issues);
         mRecyclerView.setAdapter(mIssuesAdapter);
+        mSearchView.hideProgress();
     }
 
     private void handleError(Throwable error) {
 
         Toast.makeText(getActivity(), "Error " + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        mSearchView.hideProgress();
     }
 
     private void initViews()
@@ -122,6 +126,12 @@ public class IssuesFragment extends Fragment {
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
 
                 Log.d(TAG, "onSearchTextChanged()");
+
+                if(mIssuesAdapter!= null && mIssuesAdapter.getItemCount() > 0)
+                {
+                    mIssues.clear();
+                    mIssuesAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -140,6 +150,7 @@ public class IssuesFragment extends Fragment {
                 if(repoInfo.length == 2)
                 {
                     loadJSON(repoInfo[0], repoInfo[1]);
+                    mSearchView.showProgress();
                 }
                 else
                 {
