@@ -77,7 +77,7 @@ public class IssuesFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ApiService.class);
 
-        mCompositeDisposable.add(requestInterface.getIssues()
+        mCompositeDisposable.add(requestInterface.getIssues("ReactiveX", "RxJava")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse, this::handleError));
