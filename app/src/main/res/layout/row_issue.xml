@@ -42,4 +42,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/chat_view_separator"
+        android:layout_below="@id/numberTV"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
 </RelativeLayout>
