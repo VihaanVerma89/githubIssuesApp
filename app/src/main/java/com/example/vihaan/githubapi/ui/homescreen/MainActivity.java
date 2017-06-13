@@ -9,24 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.vihaan.githubapi.R;
-import com.example.vihaan.githubapi.models.Issue;
-import com.example.vihaan.githubapi.network.ApiService;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CompositeDisposable mCompositeDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mCompositeDisposable = new CompositeDisposable();
-
-        loadJSON();
         showFragment();
     }
 
@@ -76,33 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    private void loadJSON() {
-
-        ApiService requestInterface = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(ApiService.class);
-
-        mCompositeDisposable.add(requestInterface.getIssues()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse, this::handleError));
-    }
-
-    private void handleResponse(List<Issue> androidList) {
-
-//        mAndroidArrayList = new ArrayList<>(androidList);
-//        mAdapter = new DataAdapter(mAndroidArrayList);
-//        mRecyclerView.setAdapter(mAdapter);
-        System.out.println(androidList.size());
-    }
-
-    private void handleError(Throwable error) {
-
-        Toast.makeText(this, "Error " + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-    }
 
     private void showFragment()
     {
