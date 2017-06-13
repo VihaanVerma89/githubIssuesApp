@@ -5,11 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.vihaan.githubapi.R;
 import com.example.vihaan.githubapi.models.Issue;
 import com.example.vihaan.githubapi.network.ApiService;
@@ -29,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class IssuesFragment extends Fragment {
 
-
+    public static final String TAG = IssuesFragment.class.getSimpleName();
     public static IssuesFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -108,4 +115,132 @@ public class IssuesFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
+
+    private FloatingSearchView mSearchView;
+    private String mLastQuery = "";
+    private void setupFloatingSearch() {
+        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+
+                if (!oldQuery.equals("") && newQuery.equals("")) {
+                    mSearchView.clearSuggestions();
+                } else {
+
+                    //this shows the top left circular progress
+                    //you can call it where ever you want, but
+                    //it makes sense to do it when loading something in
+                    //the background.
+                    mSearchView.showProgress();
+
+                    //simulates a query call to a data source
+                    //with a new query.
+
+                }
+
+                Log.d(TAG, "onSearchTextChanged()");
+            }
+        });
+
+        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
+
+
+            }
+
+            @Override
+            public void onSearchAction(String query) {
+                mLastQuery = query;
+
+                Log.d(TAG, "onSearchAction()");
+            }
+        });
+
+        mSearchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
+            @Override
+            public void onFocus() {
+
+                //show suggestions when search bar gains focus (typically history suggestions)
+
+                Log.d(TAG, "onFocus()");
+            }
+
+            @Override
+            public void onFocusCleared() {
+
+                //set the title of the bar so that when focus is returned a new query begins
+                mSearchView.setSearchBarTitle(mLastQuery);
+
+                //you can also set setSearchText(...) to make keep the query there when not focused and when focus returns
+                //mSearchView.setSearchText(searchSuggestion.getBody());
+
+                Log.d(TAG, "onFocusCleared()");
+            }
+        });
+
+
+        //handle menu clicks the same way as you would
+        //in a regular activity
+        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+            @Override
+            public void onActionMenuItemSelected(MenuItem item) {
+
+
+
+            }
+        });
+
+        //use this listener to listen to menu clicks when app:floatingSearch_leftAction="showHome"
+        mSearchView.setOnHomeActionClickListener(new FloatingSearchView.OnHomeActionClickListener() {
+            @Override
+            public void onHomeClicked() {
+
+                Log.d(TAG, "onHomeClicked()");
+            }
+        });
+
+        /*
+         * Here you have access to the left icon and the text of a given suggestion
+         * item after as it is bound to the suggestion list. You can utilize this
+         * callback to change some properties of the left icon and the text. For example, you
+         * can load the left icon images using your favorite image loading library, or change text color.
+         *
+         *
+         * Important:
+         * Keep in mind that the suggestion list is a RecyclerView, so views are reused for different
+         * items in the list.
+         */
+        mSearchView.setOnBindSuggestionCallback(new SearchSuggestionsAdapter.OnBindSuggestionCallback() {
+            @Override
+            public void onBindSuggestion(View suggestionView, ImageView leftIcon,
+                                         TextView textView, SearchSuggestion item, int itemPosition) {
+
+            }
+
+        });
+
+        //listen for when suggestion list expands/shrinks in order to move down/up the
+        //search results list
+        mSearchView.setOnSuggestionsListHeightChanged(new FloatingSearchView.OnSuggestionsListHeightChanged() {
+            @Override
+            public void onSuggestionsListHeightChanged(float newHeight) {
+            }
+        });
+
+        /*
+         * When the user types some text into the search field, a clear button (and 'x' to the
+         * right) of the search text is shown.
+         *
+         * This listener provides a callback for when this button is clicked.
+         */
+        mSearchView.setOnClearSearchActionListener(new FloatingSearchView.OnClearSearchActionListener() {
+            @Override
+            public void onClearSearchClicked() {
+
+                Log.d(TAG, "onClearSearchClicked()");
+            }
+        });
+    }
 }
