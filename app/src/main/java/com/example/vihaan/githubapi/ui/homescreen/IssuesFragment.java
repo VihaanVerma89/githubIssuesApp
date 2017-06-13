@@ -65,11 +65,12 @@ public class IssuesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews();
-        loadJSON();
+//        loadJSON();
     }
 
     private CompositeDisposable mCompositeDisposable;
-    private void loadJSON() {
+//    private void loadJSON() {
+        private void loadJSON(String owner, String repo) {
 
         ApiService requestInterface = new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
@@ -77,7 +78,8 @@ public class IssuesFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ApiService.class);
 
-        mCompositeDisposable.add(requestInterface.getIssues("ReactiveX", "RxJava")
+//        mCompositeDisposable.add(requestInterface.getIssues("ReactiveX", "RxJava")
+                mCompositeDisposable.add(requestInterface.getIssues(owner, repo)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse, this::handleError));
@@ -135,7 +137,7 @@ public class IssuesFragment extends Fragment {
                     //you can call it where ever you want, but
                     //it makes sense to do it when :loading something in
                     //the background.
-                    mSearchView.showProgress();
+//                    mSearchView.showProgress();
 
                     //simulates a query call to a data source
                     //with a new query.
@@ -157,6 +159,15 @@ public class IssuesFragment extends Fragment {
             public void onSearchAction(String query) {
                 mLastQuery = query;
 
+                String[] repoInfo = query.split("/");
+                if(repoInfo.length == 2)
+                {
+                    loadJSON(repoInfo[0], repoInfo[1]);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Please enter owner/repository name to see issues", Toast.LENGTH_LONG).show();
+                }
                 Log.d(TAG, "onSearchAction()");
             }
         });

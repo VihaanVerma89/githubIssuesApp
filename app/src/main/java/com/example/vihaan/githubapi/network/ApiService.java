@@ -17,6 +17,6 @@ public interface ApiService {
 //    @GET("repos/ReactiveX/RxJava/issues?page=1&per_page=10")
 //    Observable<List<Issue>> getIssues();
 
-    @GET("repos/{owner}/{repo}/issues?page=1&per_page=10")
+    @GET("repos/{owner}/{repo}/issues?page=1&per_page=100")
     Observable<List<Issue>> getIssues(@Path("owner") String repository, @Path("repo") String repo);
 }
