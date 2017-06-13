@@ -102,6 +102,7 @@ public class IssuesFragment extends Fragment {
     private void initViews()
     {
         initRecyclerView();
+        setupFloatingSearch();
     }
 
 
@@ -119,6 +120,8 @@ public class IssuesFragment extends Fragment {
     private FloatingSearchView mSearchView;
     private String mLastQuery = "";
     private void setupFloatingSearch() {
+
+        mSearchView = (FloatingSearchView) getView().findViewById(R.id.floating_search_view);
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
 
             @Override
@@ -130,7 +133,7 @@ public class IssuesFragment extends Fragment {
 
                     //this shows the top left circular progress
                     //you can call it where ever you want, but
-                    //it makes sense to do it when loading something in
+                    //it makes sense to do it when :loading something in
                     //the background.
                     mSearchView.showProgress();
 
