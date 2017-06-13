@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.vihaan.githubapi.R;
 import com.example.vihaan.githubapi.models.Issue;
@@ -35,7 +36,8 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssueViewH
     @Override
     public void onBindViewHolder(IssueViewHolder holder, int position) {
 
-        Issue Issue = mIssues.get(position);
+        Issue issue = mIssues.get(position);
+        holder.titleTV.setText(issue.getTitle());
 
 //        if(!TextUtils.isEmpty(user.getProfilePicUrl()))
 //        {
@@ -65,7 +67,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssueViewH
 
 //        RelativeLayout IssueRL;
 //        CircleImageView userIV;
-//        TextView nameTV;
+        TextView titleTV;
 //        TextView messageTV;
 //        TextView lastMessageTimeTV;
 //        TextView unreadMessageCountTV;
@@ -74,7 +76,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssueViewH
             super(v);
 //            IssueRL = (RelativeLayout) v.findViewById(R.id.IssueRL);
 //            userIV = (CircleImageView) v.findViewById(R.id.userIV);
-//            nameTV = (TextView) v.findViewById(R.id.nameTV);
+            titleTV = (TextView) v.findViewById(R.id.titleTV);
 //            messageTV = (TextView) v.findViewById(R.id.messageTV);
 //            lastMessageTimeTV = (TextView) v.findViewById(R.id.lastMessageTimeTV);
 //            unreadMessageCountTV= (TextView) v.findViewById(R.id.unreadMessageCountTV);
