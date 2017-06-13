@@ -38,24 +38,6 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssueViewH
 
         Issue issue = mIssues.get(position);
         holder.titleTV.setText(issue.getTitle());
-
-//        if(!TextUtils.isEmpty(user.getProfilePicUrl()))
-//        {
-//            Picasso.with(holder.userIV.getContext()).load(user.getProfilePicUrl()).into(holder.userIV);
-//        }
-//        holder.nameTV.setText(user.getName());
-//        holder.messageTV.setText(message.getLastMessage());
-//        holder.lastMessageTimeTV.setText(message.getLastMessageTime());
-//
-//        if(TextUtils.isEmpty(message.getUnreadMessageCount()))
-//        {
-//            holder.unreadMessageCountTV.setVisibility(View.GONE);
-//        }
-//        else
-//        {
-//            holder.unreadMessageCountTV.setVisibility(View.VISIBLE);
-//            holder.unreadMessageCountTV.setText(Issue.getMessage().getUnreadMessageCount());
-//        }
     }
 
     @Override
@@ -65,34 +47,16 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssueViewH
 
     public class IssueViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-//        RelativeLayout IssueRL;
-//        CircleImageView userIV;
         TextView titleTV;
-//        TextView messageTV;
-//        TextView lastMessageTimeTV;
-//        TextView unreadMessageCountTV;
+
 
         public IssueViewHolder(View v){
             super(v);
-//            IssueRL = (RelativeLayout) v.findViewById(R.id.IssueRL);
-//            userIV = (CircleImageView) v.findViewById(R.id.userIV);
             titleTV = (TextView) v.findViewById(R.id.titleTV);
-//            messageTV = (TextView) v.findViewById(R.id.messageTV);
-//            lastMessageTimeTV = (TextView) v.findViewById(R.id.lastMessageTimeTV);
-//            unreadMessageCountTV= (TextView) v.findViewById(R.id.unreadMessageCountTV);
-//            IssueRL.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
-//            int position = getAdapterPosition();
-//            if(position != RecyclerView.NO_POSITION){
-//                Issue Issue = mIssues.get(position);
-//                Intent intent = new Intent(mContext, IssueActivity.class);
-//                intent.putExtra(IssueActivity.EXTRAS_Issue,Issue);
-//                mContext.startActivity(intent);
-//            }
         }
     }
 }

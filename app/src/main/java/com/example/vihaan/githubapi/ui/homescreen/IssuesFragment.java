@@ -65,11 +65,9 @@ public class IssuesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews();
-//        loadJSON();
     }
 
     private CompositeDisposable mCompositeDisposable;
-//    private void loadJSON() {
         private void loadJSON(String owner, String repo) {
 
         ApiService requestInterface = new Retrofit.Builder()
@@ -78,7 +76,6 @@ public class IssuesFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ApiService.class);
 
-//        mCompositeDisposable.add(requestInterface.getIssues("ReactiveX", "RxJava")
                 mCompositeDisposable.add(requestInterface.getIssues(owner, repo)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -87,11 +84,6 @@ public class IssuesFragment extends Fragment {
 
     IssuesAdapter mIssuesAdapter;
     private void handleResponse(List<Issue> issues){
-
-//        mAndroidArrayList = new ArrayList<>(Issue);
-//        mAdapter = new DataAdapter(mAndroidArrayList);
-//        mRecyclerView.setAdapter(mAdapter);
-
         mIssuesAdapter = new IssuesAdapter(getActivity(), issues);
         mRecyclerView.setAdapter(mIssuesAdapter);
     }
@@ -129,21 +121,6 @@ public class IssuesFragment extends Fragment {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
 
-                if (!oldQuery.equals("") && newQuery.equals("")) {
-                    mSearchView.clearSuggestions();
-                } else {
-
-                    //this shows the top left circular progress
-                    //you can call it where ever you want, but
-                    //it makes sense to do it when :loading something in
-                    //the background.
-//                    mSearchView.showProgress();
-
-                    //simulates a query call to a data source
-                    //with a new query.
-
-                }
-
                 Log.d(TAG, "onSearchTextChanged()");
             }
         });
@@ -176,7 +153,6 @@ public class IssuesFragment extends Fragment {
             @Override
             public void onFocus() {
 
-                //show suggestions when search bar gains focus (typically history suggestions)
 
                 Log.d(TAG, "onFocus()");
             }
