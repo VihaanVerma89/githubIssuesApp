@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.vihaan.githubapi.R;
@@ -38,6 +39,14 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssueViewH
 
         Issue issue = mIssues.get(position);
         holder.titleTV.setText(issue.getTitle());
+        holder.numberTV.setText("#"+issue.getNumber() +" "+ issue.getState() +"ed" + " by " + issue.getUser().getLogin());
+
+        if(issue.getComments() > 0)
+        {
+            holder.commentIV.setVisibility(View.VISIBLE);
+            holder.commentCountTV.setVisibility(View.VISIBLE);
+            holder.commentCountTV.setText(issue.getComments()+"");
+        }
     }
 
     @Override
@@ -48,11 +57,17 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssueViewH
     public class IssueViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView titleTV;
+        TextView numberTV;
+        ImageView commentIV;
+        TextView commentCountTV;
 
 
         public IssueViewHolder(View v){
             super(v);
             titleTV = (TextView) v.findViewById(R.id.titleTV);
+            numberTV= (TextView) v.findViewById(R.id.numberTV);
+            commentCountTV= (TextView) v.findViewById(R.id.commentCountTV);
+            commentIV = (ImageView) v.findViewById(R.id.commentIV);
         }
 
         @Override

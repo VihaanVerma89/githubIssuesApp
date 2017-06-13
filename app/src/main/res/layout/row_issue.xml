@@ -20,7 +20,18 @@
         android:text="#2343"
         />
 
+    <ImageView
+        android:id="@+id/commentIV"
+        android:layout_toLeftOf="@+id/commentCountTV"
+        android:layout_below="@id/titleTV"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:tint="@color/color_comment"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_mode_comment_black_24dp"/>
+
     <TextView
+        android:id="@+id/commentCountTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
